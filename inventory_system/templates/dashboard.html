@@ -1,0 +1,297 @@
+{% extends "layout.html"%}
+{% block content %}
+<br>
+
+<!-- Sale & Revenue Start -->
+<div class="container-fluid pt-4 px-4" style="margin-top: 1%;">
+    <div class="row g-4">
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-line fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2" data-i18n="todaySale">Today Sale</p>
+                    {% for i in today_sales %}
+                    <h6 class="mb-0">KES. {{i[1]}}</h6>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2" data-i18n="totalSale">Total Sale</p>
+                    {% for i in total_sales %}
+                    <h6 class="mb-0">KES. {{i[0]}}</h6>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-area fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2" data-i18n="todayProfit">Today Profit</p>
+                    {% for i in profit_today %}
+                    <h6 class="mb-0">KES. {{i[1]}}</h6>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                <div class="ms-3">
+                    <p class="mb-2" data-i18n="totalProfit">Total Profit</p>
+                    {% for i in profit_per_day %}
+                    <h6 class="mb-0">KES.{{i[0]}}</h6>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sale & Revenue End -->
+<br>
+<br>
+
+ <!-- Sales Chart Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="bg-light rounded h-100 p-4">
+                <canvas id="bar-chart" width="800" height="450"></canvas>
+            </div>
+        </div>
+
+        
+        
+        <div class="col-sm-12 col-xl-6"> 
+            <div class="bg-light rounded h-100 p-4">
+                <canvas id="line-chart" width="800" height="450"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Sales Chart End -->
+    <br>
+    <br>
+
+
+<!-- gets_remaining_stock_per_product Start -->
+<div class="container-fluid pt-4 px-4">
+    <div class="row g-4">
+        <div class="col-sm-12 col-xl-6">
+            <div class="chart-container " style="position: relative; height:40vh; width:80vw; ">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- gets_remaining_stock_per_product End -->
+   
+
+
+<!-- Recent Sales Start -->
+<!-- <div class="container">
+    <div class="container-fluid pt-4 px-4">
+        <div class="bg-light text-center rounded p-4">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h6 class="mb-0">Recent Salse</h6>  -->
+                <!-- <a href="">Show All</a> -->
+            <!-- </div>
+            <div class="container">
+                <table id="example" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr class="text-dark">
+                            <th>Customer</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in recent_sales %}
+                        <tr>
+                            <td>{{ i.fname }}</td>
+                            <td>{{ i.product_name }}</td>
+                            <td>{{ i.quantity }}</td>
+                            <td>{{average_amount}}</td>
+                            <td>{{ i.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        </tr>
+                        {% endfor %}
+
+                        
+                    </tbody> -->
+
+                     <!-- <tbody>
+                        {% for sale in recent_sales %}
+                        <tr>
+                            <td>{{ sale.fname }}</td>
+                            <td>{{ sale.product_name }}</td>
+                            <td>{{ sale.quantity }}</td>
+                            <td>{{ sale.average_amount }}</td>
+                            <td>{{ sale.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody> -->
+                
+                <!-- </table>
+            </div>
+        </div>
+    </div>
+</div> -->
+<!-- Recent Sales End -->
+<br>
+<br>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    new Chart(document.getElementById("bar-chart"), {
+        type: 'bar',
+        data: {
+            labels: {{ names | safe}},
+        datasets: [
+        {
+            label: "Sales",
+            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#B02394", "#CC9A0A", "#361674"],
+            data: {{ value | safe }}
+                },
+        {
+            label: "PROFITS",
+            backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#B02394", "#CC9A0A", "#361674"],
+            data: {{ value_profit | safe}}
+            }
+    ]
+        },
+        options: {
+        legend: { display: false },
+        title: {
+            display: true,
+            text: 'Sales per product'
+        }
+    }
+    });
+
+    new Chart(document.getElementById("line-chart"), {
+        type: 'line',
+        data: {
+            labels: {{ s_name | safe}},
+        datasets: [{
+            data: {{ v_value | safe}},
+        label: "SALES",
+        borderColor: "#3e95cd",
+        fill: true
+  },
+        {
+            data: {{ pro_value | safe}},
+        label: "PROFITS",
+
+        borderColor: "#3cba9f",
+        fill: false
+           }
+    ]
+},
+        options: {
+        responsive: true
+    }
+       
+});
+
+
+</script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ remaining_stock_labels | safe }},
+        datasets: [{
+            label: 'Remaining In Stock',
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+            ],
+            data: {{ remaining_stock_data | safe }},
+        borderWidth: 1
+        }]
+      },
+        options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+    });
+
+</script>
+
+
+
+<!-- <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <canvas id="bar-chart" width="800" height="450"></canvas>
+                </div>
+            </div>
+    
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <canvas id="bar-chart1" width="800" height="450"></canvas>
+                </div>
+            </div>
+    
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <canvas id="line-chart" width="800" height="450"></canvas>
+                </div>
+            </div>
+    
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="chart-container">
+                    <canvas id="line-chart1" width="800" height="450"></canvas>
+                </div>
+            </div>
+    
+        </div>
+    
+    
+    
+    </div> -->
+<!-- <canvas id="bar-chart1" width="800" height="450"></canvas> -->
+
+
+
+
+<!-- </div> -->
+
+{% endblock %}

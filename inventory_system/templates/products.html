@@ -1,0 +1,255 @@
+{% extends "layout.html"%}
+{% block content %}
+
+<div class="container">
+
+    <div class="row_1">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            style="margin-left: 45%; margin-top: 7%;" data-i18n="addNewItem">
+            Add New Item
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel" data-i18n="addProducts">Add Products</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ url_for('insert') }}" method="post">
+                            <div class="mb-3">
+                                <label for="Products_Name" class="form-label" data-i18n="productName">Products Name</label>
+                                <input name="product_name" type="text" class="form-control" id="exampleInputEmail1"
+                                    aria-describedby="emailHelp">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Buying_price" class="form-label" data-i18n="buyingPrice">Buying Price</label>
+                                <input name="buying_price" type="number" class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="Selling_price" class="form-label" data-i18n="sellingPrice">Selling Price</label>
+                                <input name="selling_price" type="number" class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="mb-3">
+                                <label for="stock_quantity" class="form-label" data-i18n="stockQuantity">Stock quantity</label>
+                                <input name="stock_quantity" type="number" class="form-control"
+                                    id="exampleInputPassword1">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary" data-i18n="save">Save</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="close">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="container"> -->
+        <!-- <div class="row"> -->
+
+        <table class="table">
+            <thead>
+
+
+                <tr>
+                    <th scope="col" data-i18n="id">ID</th>
+                    <th scope="col" data-i18n="productName">Products Name</th>
+                    <th scope="col" data-i18n="buyingPrice">Buying price</th>
+                    <th scope="col" data-i18n="sellingPrice">Seling Price</th>
+                    <th scope="col" data-i18n="stockQuantity">Stock Quantity</th>
+                    <th scope="col" data-i18n="action">Action</th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr {% for row in prods %}>
+
+                    <td>{{ row.id}}</td>
+                    <td>{{ row.product_name}}</td>
+                    <td>{{ row.buying_price }}</td>
+                    <td>{{ row.selling_price }}</td>
+                    <td>{{ row.stock_quantity }}</td>
+
+                    <td>
+                        <!-- Button trigger modal -->
+
+                        <a href="/update/{{row.id}}" class="btn btn-primary btn-xs" data-bs-toggle="modal"
+                            data-bs-target="#modaledit{{row.id}}"><i class="fa-regular fa-pen-to-square fa-sm"
+                                style="color: #f5f6f8;"></i></a>
+
+
+                        <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs"
+                            onclick="return confirm('Are You Sure To Delete ?')"><i class="fa-solid fa-trash"></i></a>
+
+                    </td>
+
+                </tr>
+
+                <!-- Modal Edit Products -->
+
+                <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" data-i18n="updateProduct">Update Product</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <form action="{{url_for('update')}}" method="post">
+                                    <div class="form-group">
+                                        <label data-i18n="productName">Product Name</label>
+                                        <input type="hidden" name="id" value="{{row.id}}">
+                                        <input type="text" class="form-control" name="product_name"
+                                            value="{{row.product_name}}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label data-i18n="buyingPrice">Buying Price</label>
+                                        <input type="text" class="form-control" name="buying_price"
+                                            value="{{row.buying_price}}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label data-i18n="sellingPrice">Selling Price</label>
+                                        <input type="text" class="form-control" name="selling_price"
+                                            value="{{row.selling_price}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label data-i18n="stockQuantity">Stock Quantity</label>
+                                        <input type="text" class="form-control" name="stock_quantity"
+                                            value="{{row.stock_quantity}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit" data-i18n="update">Update</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" data-i18n="close">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+
+<!-- Modal -->
+<!-- <div id="modaledit{{row.id}}" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="modal-body">
+                                        <form action="{{url_for('update')}}" method="post">
+                                            <div class="form-group">
+                                                <label>Product Name</label>
+                                                <input type="hidden" name="id" value="{{row.id}}">
+                                                <input type="text" class="form-control" name="product_name"
+                                                    value="{{row.product_name}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Buying Price</label>
+                                                <input type="text" class="form-control" name="buying_price"
+                                                    value="{{row.buying_price}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Selling Price</label>
+                                                <input type="text" class="form-control" name="selling_price"
+                                                    value="{{row.selling_price}}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Stock Quantity</label>
+                                                <input type="text" class="form-control" name="stock_quantity"
+                                                    value="{{row.stock_quantity}}">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Update</button>
+                                            </div> -->
+<!-- <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            </div> -->
+<!-- </form>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div> -->
+
+
+<!-- <tfoot>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Products Name</th>
+                <th scope="col">Buying price</th>
+                <th scope="col">Seling Price</th>
+                <th scope="col">Stock Quantity</th>
+            </tr>
+
+
+
+        </tfoot> -->
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div id="modaledit" class="modal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Update Products</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="" method="post">
+                                <div class="form-group">
+                                    <label>Name:</label>
+                                    <input type="hidden" name="id" value="id">
+                                    <input type="text" class="form-control" name="name" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>buying_price:</label>
+                                    <input type="text" class="form-control" name="buying_price" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>selling_price:</label>
+                                    <input type="text" class="form-control" name="selling_price" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>stock_quantity:</label>
+                                    <input type="text" class="form-control" name="stock_quantity" value="">
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div> -->

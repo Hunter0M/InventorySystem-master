@@ -1,0 +1,29 @@
+{%extends "layout.html"%}
+{% block content%}
+
+<form action="" method="POST">
+    {{ form.hidden_tag()}}
+    <section>
+        <div class="login" >
+            <h2 data-i18n="passReset">Password Reset</h2>
+            <div class="inputBox">
+                {{ form.email.label(class='form-control-label')}}
+                {% if form.email.errors%}
+                {{ form.email(class='form-control form-control-lg is-invalid')}}
+                <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                    <span>{{error}}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.email(class='form-control form-control-lg')}}
+                {% endif %}
+            </div>
+            <div class="inputBox">
+                <input type="submit" value="Login" id="btn" data-i18n="login">
+            </div>
+        </div>
+    </section>
+</form>
+
+{% endblock content %}

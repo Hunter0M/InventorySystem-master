@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Home{% endblock %}</title>
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+
+
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!--=============== REMIXICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+        id="bootstrap-css">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <!-- Bootstrap Css link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- CSS File link -->
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    <!-- Datatable links in css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css">
+
+
+
+
+
+</head>
+
+<body class="morning-mode" class="evening-mode">
+
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Brand Start -->
+    <div class="container-fluid bg-primary text-white pt-3 pb-4 d-none d-lg-flex">
+        <div class="container pb-2">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex">
+                    <i class="bi bi-telephone-inbound fs-2"></i>
+                    <div class="ms-3">
+                        <h5 class="text-white mb-0" lang="en" data-i18n="callNow">Call Now</h5>
+                        <span>+254799911154</span>
+                    </div>
+                </div>
+                <a href="/" class="h1 text-white mb-0">My<span class="text-dark">duka</span></a>
+                <div class="d-flex">
+                    <i class="bi bi-envelope fs-2"></i>
+                    <div class="ms-3">
+                        <h5 class="text-white mb-0" data-i18n="mailNow">Mail Now</h5>
+                        <span>hunter07m0@gmail.com</span>
+                        <div class="icon" style="right: 10;">
+                            <div class="ms-auto d-none d-lg-flex">
+                                <a class="btn btn-sm-square btn-primary ms-2" href="#"><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-sm-square btn-primary ms-2" href="https://twitter.com/HunterAhmed0"
+                                    target="_blank"><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-sm-square btn-primary ms-2"
+                                    href="https://www.linkedin.com/in/hunter-ahmed-361460243/" target="_blank"><i
+                                        class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- Brand End -->
+
+
+
+    <!-- Navbar Start -->
+    {% if current_user.is_authenticated %}
+
+    <div class="container-fluid sticky-top">
+
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white py-lg-0 px-lg-3">
+                <a href="/" class="navbar-brand d-lg-none">
+                    <h1 class="text-primary m-0">My<span class="text-dark" >duka</span>
+                    </h1>
+                </a>
+                <button type="button" class="navbar-toggler me-0" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+
+                    <div class="navbar-nav">
+
+                        <a href="/" class="nav-item nav-link " id="#btnLeft" data-i18n="home">Home</a>
+                        <a href="/products" class="nav-item nav-link " data-i18n="product">Products</a>
+                        <a href="/sales" class="nav-item nav-link " data-i18n="sales">Sales</a>
+                        <a href="/dashboard" class="nav-item nav-link " data-i18n="dashboard">Dashboard</a>
+
+                        <div class="container">
+                            <div class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"
+                                    data-i18n="myAccount">My Account</a>
+                                <div class="dropdown-menu bg-light m-0">
+                                    <a href="/updateprofile" class="dropdown-item" data-i18n="myProfile">My Profile</a>
+                                    <a href="/logout" class="dropdown-item" data-i18n="logout">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- <div class="nav-item dropdown nav-link "> -->
+                            <div class="nav-item dropdown" style="margin-top: 30px;">
+                                <div class="">
+
+                                    <select class="">
+                                        <option value="" disabled selected>Select a language</option>
+                                        <!-- <option selected>Select a language</option> -->
+                                        <option value="en" data-i18n="english">English</option>
+                                        <option value="ar" data-i18n="arabic">Arabic</option>
+                                        <option value="fr" data-i18n="french">French</option>
+                                        <!-- <option value="ja" data-i18n="japanese">Japanese</option> -->
+                                        <option value="sw" data-i18n="swahili">Swahili</option>
+                                        <!-- <option value="ru" data-i18n="russian">Russian</option> -->
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </nav>
+        </div>
+    </div>
+
+    {% else %}
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white py-lg-0 px-lg-3">
+                <a href="/" class="navbar-brand d-lg-none">
+                    <h1 class="text-primary m-0">My<span class="text-dark">duka</span>
+                    </h1>
+                </a>
+                <button type="button" class="navbar-toggler me-0" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav ms-auot">
+                        <li class="nav-item">
+                            <a href="/" class="nav-item nav-link " id="#btnLeft" data-i18n="home">Home</a>
+
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/register" class="nav-item nav-link" data-i18n="register">Register</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="/login" class="nav-item nav-link" data-i18n="login">Login</a>
+                        </li>
+                    </ul>
+                </div>
+
+                {% endif %}
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+
+
+
+    <!-- Start flash massageing -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}} text-center alert-dismissible fade show ">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <!-- End flash massageing -->
+
+
+
+    <!-- <div class="container"> -->
+    {% block content %} {% endblock %}
+
+    <!-- footer section start -->
+    <!-- <div class="container-sm"> -->
+    <div class="footer_section layout_padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="location_text">
+                        <ul style="list-style-type: none;">
+                            <li>
+                                <a href="#"><span class="padding_left_10"><i class="fa fa-map-marker"
+                                            aria-hidden="true"></i></span>
+                                    Corner House Building,<br> Kimathi St, Nairobi</a>
+                            </li>
+                            <li>
+                                <a href="#"><span class="padding_left_10"><i class="fa fa-phone"
+                                            aria-hidden="true"></i></span>(+254) 799911154</a>
+                            </li>
+                            <li>
+                                <a href="mailto:hunter07m0@gmail.com"><span class="padding_left_10"><i
+                                            class="fa fa-envelope"
+                                            aria-hidden="true"></i></span>hunter07m0@gmail.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="newslatter_main">
+                        <h1 class="useful_text" data-i18n="followUs">Follow Us</h1>
+                        <div class="footer_social_icon">
+                            <ul style="list-style-type: none;">
+                                <li><a href="#"><i class="fab fa-facebook-f" aria-hidden="true"></i></a></li>
+                                <li><a href="https://twitter.com/HunterAhmed0" target="_blank"><i class="fab fa-twitter"
+                                            aria-hidden="true"></i></a>
+                                </li>
+                                <li><a href="https://www.linkedin.com/in/hunter-ahmed-361460243/" target="_blank"><i
+                                            class="fab fa-linkedin-in" aria-hidden="true"></i></a></li>
+                                <!-- <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- footer section end -->
+
+
+
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0" data-i18n="allRightReserved">
+                    &copy; <a class="fw-medium text-light" href="#" data-i18n="inventorySystem,">Inventory System</a>,
+                    All Right Reserved.
+                </div>
+                <div class="col-md-6 text-center text-md-end" data-i18n="developedAndDesignedBy">
+                    <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                    Developed And Designed By Hunter<a class="fw-medium text-light" href="#"
+                        data-i18n="hunet">Hunter</a>
+                    <!-- Distributed By <a class="fw-medium text-light" href="https://themewagon.com">ThemeWagon</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+
+    <!-- Back to Top -->
+    <div id="progress">
+        <!-- Back to Top -->
+        <a href="#" id="progress-value" class="btn btn-primary btn-primary-outline-0 btn-md-square back-to-top"><i
+                class="fa fa-arrow-up"></i></a>
+
+        <!-- <a href="#" id="progress-value" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i
+                    class="bi bi-arrow-up"></i></a> -->
+    </div>
+
+    </div>
+
+    <!-- <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a> -->
+    <!-- </div> -->
+    <!-- icon -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!--  -->
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Datatable links in js -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+    <script>
+        new DataTable('#example');
+    </script>
+
+    <!-- Bootstrap link -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <!-- Chart.js link -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
+    <!-- javascript  -->
+    <script src="/static/javascript/script.js"></script>
+    <script src="/static/javascript/charts.js"></script>
+    <script src="script.js"></script>
+    <script src="/static/javascript/translations.js"></script>
+    <script src="/static/javascript/script_tran.js" type="module"></script>
+
+
+
+
+    <!-- <script>
+        var ctx = document.getElementById('remainingStockChart').getContext('2d');
+        var remainingStockChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ remaining_stock_labels | safe }},
+        datasets: [{
+            label: 'Remaining Stock',
+            data: {{ remaining_stock_data | safe }},
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script> -->
+
+
+
+</body>
+
+</html>
